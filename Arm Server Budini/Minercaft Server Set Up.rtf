@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+1. Follow through this {\field{\*\fldinst{HYPERLINK "https://www.reddit.com/r/admincraft/comments/qo78be/creating_a_minecraft_server_with_oracle_cloud/"}}{\fldrslt link}} until the ssh section;\
+\
+2. Since I\'92m using a Unix based OS, ssh connection is different compared to the original guide:\
+	\
+	- Follow this {\field{\*\fldinst{HYPERLINK "https://docs.oracle.com/it-it/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm#linux-from-unix"}}{\fldrslt guide}}.\
+\
+3. On your local machine: make 2 scripts one for the connection and one (if necessary) to upload your world folders:\
+\
+	- connection.sh\
+	\
+	     \AppleHighlight-1 \AppleHilightClrSch-4  
+\f1\fs22 \cf2 \CocoaLigature0 #!/bin/sh\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\AppleHighlight0 \AppleHilightClrSch0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+		\AppleHighlight-1 \AppleHilightClrSch-4 chmod 400 ssh-private-key-name.key\
+\AppleHighlight0 \AppleHilightClrSch0 		\AppleHighlight-1 \AppleHilightClrSch-4 ssh -i ssh-private-key-name.key opc@server_ip\AppleHighlight0 \AppleHilightClrSch0 \
+\
+	- upload.sh, $1 is the parameter to give to the script which is the path of the \'93world\'94 folder \
+	\
+		\AppleHighlight-1 \AppleHilightClrSch-4 #!/bin/sh\AppleHighlight0 \AppleHilightClrSch0 \
+	\
+		\AppleHighlight-1 \AppleHilightClrSch-4 scp -i ssh-private-key-name.key -r "$1" opc@server_ip:~/uploads/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \AppleHighlight0 \AppleHilightClrSch0 \CocoaLigature1 \
+\
+4. First of all run the connection script and connect to the Oracle instance (change the file mode first): \
+\
+	      \AppleHighlight-1 \AppleHilightClrSch-4 chmod 700 connection.sh upload.sh\AppleHighlight0 \AppleHilightClrSch0 \
+	      \AppleHighlight-1 \AppleHilightClrSch-4 ./connection.sh\AppleHighlight0 \AppleHilightClrSch0 \
+\
+5. then run the command: \AppleHighlight-1 \AppleHilightClrSch-4 sudo dnf update\AppleHighlight0 \AppleHilightClrSch0 \
+\
+6. Install Docker to use Minecraft Image , check {\field{\*\fldinst{HYPERLINK "https://docs.docker.com/engine/install/rhel/#install-using-the-repository"}}{\fldrslt docker/rhel}} \
+\
+7. Install Docker-compose plugin to manage and run fastly multiple containers: {\field{\*\fldinst{HYPERLINK "https://docs.docker.com/compose/install/linux/#install-using-the-repository"}}{\fldrslt docker-compose/rhel}}\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \AppleHighlight-1 \AppleHilightClrSch-4 \CocoaLigature0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \AppleHighlight0 \AppleHilightClrSch0 \CocoaLigature1 8. create directories: \AppleHighlight-1 \AppleHilightClrSch-4 mkdir minecraft, uploads\
+\AppleHighlight0 \AppleHilightClrSch0 \
+9.join directory: \AppleHighlight-1 \AppleHilightClrSch-4 cd minecraft\AppleHighlight0 \AppleHilightClrSch0 , and create the  file: \AppleHighlight-1 \AppleHilightClrSch-4 nano docker-compose.yml
+\f1\fs22 \cf2 \AppleHighlight0 \AppleHilightClrSch0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\
+
+\f0\fs24 10.create 2 folders: vanilla, mod (one for each server you require) which are gonna be the volumes attached to the respective server container\
+\
+11. {\field{\*\fldinst{HYPERLINK "https://blogs.oracle.com/developers/post/how-to-set-up-and-run-a-really-powerful-free-minecraft-server-in-the-cloud"}}{\fldrslt fix}} the networking and the firewall to allow players to connect to the container\
+\
+12. on your locale machine upload the old world if you have it:\
+\
+		\AppleHighlight-1 \AppleHilightClrSch-4 ./upload.sh pathtothesavedworldfolder\AppleHighlight0 \AppleHilightClrSch0 \
+\
+13.on the server modify the file authorization so that docker can read the folder\
+\
+		\AppleHighlight-1 \AppleHilightClrSch-4 sudo chown -R $(whoami):$(whoami) ./vanilla\AppleHighlight0 \AppleHilightClrSch0 \
+		\AppleHighlight-1 \AppleHilightClrSch-4 sudo chmod -R u+rw ./vanilla\AppleHighlight0 \AppleHilightClrSch0 \
+\
+14. move the uploaded folder to the vanilla folder\
+\
+		\AppleHighlight-1 \AppleHilightClrSch-4 cp -r ../uploads/nameoftheuploadedfolder   ./vanilla/world\AppleHighlight0 \AppleHilightClrSch0 \
+\
+15. time to edit the docker-compose.yml :<github carica link al file>\
+\
+16. create and start the container with the command: sudo docker compose up -d, the -d flag used to not stop the container if we close the ssh connection.	\
+
+\fs22 \
+\
+
+\fs36 CREATE ADDITIONAL SERVER\
+\
+
+\f1\fs22 \
+\
+\
+\
+}
