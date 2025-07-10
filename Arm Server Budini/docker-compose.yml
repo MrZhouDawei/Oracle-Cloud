@@ -6,13 +6,13 @@ services:
     ports:
       - "25555:25565"
     volumes:
-      - ../worlds_backup:/data
+      - ./world:/data/world
     environment:
       MEMORY: "6G"
       EULA: "TRUE"
       TYPE: "PAPER"
       OVERRIDE_SERVER_PROPERTIES: "TRUE"
-      SERVER_NAME: "DAYAISANANIMAL"
+      SERVER_NAME: "PAPERINO"
       MAX_PLAYERS: "20"
       ONLINE_MODE: "TRUE"
       ENABLE_COMMAND_BLOCK: "TRUE"
@@ -22,7 +22,6 @@ services:
       ALLOW_FLIGHT: "TRUE"
       MOTD: |
         A %TYPE% server on %VERSION%
-        Daya è un animale
     tty: true
     stdin_open: true
     restart: always
