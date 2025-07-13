@@ -49,7 +49,6 @@ services:
       ALLOW_FLIGHT: "TRUE"
       MOTD: |
         A %TYPE% server on %VERSION%
-        Budini Mod Server GG!!!
     tty: true
     stdin_open: true
     restart: always

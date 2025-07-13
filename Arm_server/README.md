@@ -131,7 +131,7 @@ To run another server:
 
 ## To Do ##
 - [ ] Add Backup World Service
-- [ ] Add Server Route Service(requires HW with good specs)
+- [ ] Add Server Route Service
 
 ## License ##
 
