@@ -2,8 +2,6 @@
 services:
   minecraft:
     image: itzg/minecraft-server:latest
-    ports:
-      - "25555:25565"
     volumes:
       - ./world:/data/world
     environment:
@@ -26,8 +24,6 @@ services:
     restart: always
   mod_minecraft:
     image:  itzg/minecraft-server:latest
-    ports:
-      - "25565:25565"
     volumes:
       - ./mod_world:/data
       - ./mods:/data/mods:rw
@@ -52,5 +48,20 @@ services:
     tty: true
     stdin_open: true
     restart: always
+  mc_router:
+    image: itzg/mc-router:latest
+    depends_on:
+      - minecraft
+      - mod_minecraft
+    environment:
+      API_BINDING: ":25564"
+      DEBUG: "TRUE"
+      MAPPING: |
+        play1.example.com=mod_minecraft:25565
+        play2.example.com=minecraft:25565
+    ports:
+      - "25565:25565"
+      - "25555:25564"
+
 
     
