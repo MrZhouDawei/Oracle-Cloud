@@ -33,6 +33,7 @@ services:
       TYPE: "FORGE"
       FORGE_VERSION: "47.4.3"
       VERSION: "1.20.1"
+      RESOURCE_PACK: "https://files.example.com/download"
       OVERRIDE_SERVER_PROPERTIES: "TRUE"
       SERVER_NAME: "BUDINI"
       VIEW_DISTANCE: "6"
