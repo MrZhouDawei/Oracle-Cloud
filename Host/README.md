@@ -4,7 +4,7 @@ Containerized, secure personal services stack on Oracle Cloud using Docker, Ngin
 
 ## Objectives
 
-[:x:] file server\
+[ :white_check_mark: ] file server\
 [ ] web server\
 [ ] email server\
 [ ] password manager\
@@ -30,7 +30,7 @@ Desired goal: Expand effortlessly to add web, email, and other personal services
 
 ### Architecture
 
-> Browser ⇄ Cloudflare Edge ⇄ Nginx (Docker) ⇄ Filebrowser (Docker)
+Browser ⇄ Cloudflare Edge ⇄ Nginx (Docker) ⇄ Filebrowser (Docker)
 
 ### Prerequisites
 
