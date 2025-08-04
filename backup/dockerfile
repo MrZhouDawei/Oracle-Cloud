@@ -1,0 +1,14 @@
+FROM python:3
+LABEL maintainer=daweizhou
+
+WORKDIR /
+
+COPY backup.py /backup.py
+
+ENV backup_name=backup
+ENV backup_type=zip
+
+VOLUME [ "/data" ]
+VOLUME [ "/destination"]
+
+CMD python3 /backup.py /data /destination $backup_type $backup_name 
