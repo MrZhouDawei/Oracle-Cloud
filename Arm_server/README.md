@@ -130,7 +130,7 @@ To run another server:
 4. Repeat the volume binding and configuration
 
 ## To Do ##
-- [ ] Add Backup World Service
+- [X] Add Backup World Service
 - [X] Add Server Route Service
 
 ## License ##

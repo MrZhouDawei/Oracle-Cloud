@@ -1,4 +1,3 @@
-
 services:
   minecraft:
     image: itzg/minecraft-server:latest
@@ -9,7 +8,7 @@ services:
       EULA: "TRUE"
       TYPE: "PAPER"
       OVERRIDE_SERVER_PROPERTIES: "TRUE"
-      SERVER_NAME: "PAPERINO"
+      SERVER_NAME: "nqwpgnqo"
       MAX_PLAYERS: "20"
       ONLINE_MODE: "TRUE"
       ENABLE_COMMAND_BLOCK: "TRUE"
@@ -17,11 +16,16 @@ services:
       DIFFICULTY: "NORMAL"
       SPAWN_PROTECTION: "0"
       ALLOW_FLIGHT: "TRUE"
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "minecraft"
+      RCON_PORT: "25575" 
       MOTD: |
         A %TYPE% server on %VERSION%
+        Vanilla 
     tty: true
     stdin_open: true
     restart: always
+
   mod_minecraft:
     image:  itzg/minecraft-server:latest
     volumes:
@@ -33,9 +37,8 @@ services:
       TYPE: "FORGE"
       FORGE_VERSION: "47.4.3"
       VERSION: "1.20.1"
-      RESOURCE_PACK: "https://files.example.com/download"
       OVERRIDE_SERVER_PROPERTIES: "TRUE"
-      SERVER_NAME: "BUDINI"
+      SERVER_NAME: "ewqrnwqr"
       VIEW_DISTANCE: "6"
       MAX_PLAYERS: "10"
       ONLINE_MODE: "TRUE"
@@ -44,25 +47,88 @@ services:
       DIFFICULTY: "NORMAL"
       SPAWN_PROTECTION: "0"
       ALLOW_FLIGHT: "TRUE"
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "modminecraft"
+      RCON_PORT: "25575"
       MOTD: |
         A %TYPE% server on %VERSION%
+        Mod Server GG!!!
     tty: true
     stdin_open: true
     restart: always
+
+  test_minecraft:
+    image:  itzg/minecraft-server:latest
+    volumes:
+      - ./test/test_data:/data:rw
+      - ./test/test_mods:/data/mods:rw
+    environment:
+      MEMORY: "6G"
+      EULA: "TRUE"
+      TYPE: "FORGE"
+      FORGE_VERSION: "47.4.3"
+      VERSION: "1.20.1"
+      OVERRIDE_SERVER_PROPERTIES: "TRUE"
+      SERVER_NAME: “TEST”
+      VIEW_DISTANCE: “9”
+      MAX_PLAYERS: “5”
+      ONLINE_MODE: "TRUE"
+      ENABLE_COMMAND_BLOCK: “FALSE”
+      MODE: "SURVIVAL"
+      DIFFICULTY: "NORMAL"
+      SPAWN_PROTECTION: "0"
+      ALLOW_FLIGHT: "TRUE"
+      MOTD: |
+        A %TYPE% server on %VERSION%
+        Testing
+    tty: true
+    stdin_open: true
+    restart: always
+
+  backup_minecraft:
+    image: itzg/mc-backup
+    depends_on:
+      - minecraft
+    environment:
+      BACKUP_INTERVAL: "24h"
+      RCON_HOST: minecraft
+      PRE_BACKUP_SCRIPT: |
+        echo "Before backup!"
+        echo "Also before backup from $$RCON_HOST to $$DEST_DIR"
+      BACKUP_NAME: "vanilla_minecraft"
+    volumes:
+      - ./world:/data/world:ro
+      - /home/opc/backup:/backups
+ 
+  backup_mod_minecraft:
+    image: itzg/mc-backup
+    depends_on:
+      - mod_minecraft
+    environment:
+      BACKUP_INTERVAL: "24h"
+      RCON_HOST: mod_minecraft
+      PRE_BACKUP_SCRIPT: |
+        echo "Before backup!"
+        echo "Also before backup from $$RCON_HOST to $$DEST_DIR"
+      BACKUP_NAME: "mod_minecraft"
+    volumes:
+      - ./mod_world:/data:ro
+      - ./mods:/data/mods:ro
+      - /home/opc/backup:/backups
+
   mc_router:
     image: itzg/mc-router:latest
     depends_on:
       - minecraft
       - mod_minecraft
+      - test_minecraft
     environment:
       API_BINDING: ":25564"
       DEBUG: "TRUE"
       MAPPING: |
-        play1.example.com=mod_minecraft:25565
-        play2.example.com=minecraft:25565
+        play1.example=mod_minecraft:25565
+        play2.example=minecraft:25565
+        mctest.example=test_minecraft:25565
     ports:
       - "25565:25565"
       - "25555:25564"
-
-
-    
