@@ -17,3 +17,40 @@ Ideal for simple, cron-style backups inside CI pipelines, IoT devices, or on any
 ## More Info
 
 Check the Docker Hub image for more information: [python-backup-script](https://hub.docker.com/r/daweizhou22/python-backup-script)
+
+
+##  Multiple Copies on Cloud
+
+You can store multiple backup copies in the cloud using: **rclone**
+
+### Quick Steps
+
+[Install](https://rclone.org/install/)\
+[Download rclone for setup](https://rclone.org/downloads/)\
+[Setup Config file](https://rclone.org)
+> [!IMPORTANT]
+> Every Cloud Provider has a different Configuration Steps
+
+### How to use
+
+[Rclone Manual](https://rclone.org/commands)
+- Using Host:
+  ```bash
+    rclone command source:path/to/file fileconfiguration-name:path/to/Cloudfile
+  ```
+- Using Docker Image:
+  ```bash
+    docker run --rm \
+      --volume ~/config/rclone:/config/rclone \
+      --volume ~/my_backups:/data \
+      rclone/rclone \
+      copy pCloud: /data/
+  ```
+
+
+## Credits
+
+[Rclone Official Webpage](https://rclone.org)\
+\
+[Rclone Docker Image Guide](https://samjenkins.com/rclone-docker-setup/#steps-to-set-up-rclone-docker-image)
+

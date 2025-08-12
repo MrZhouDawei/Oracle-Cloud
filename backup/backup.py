@@ -8,11 +8,11 @@ def is_format_correct(format: str):
     format_list = ['zip','tar','gztar', 'bztar', 'xztar']
     return format in format_list
 
-def ensure_mounted(path: str):
-    if( not Path(path).exists()) :
-        raise Exception( f'{path} not a directory!' )
-    if( not os.path.ismount(path) ) :
-        raise Exception( f'{path} not found!' )
+def ensure_directory(path: str):
+    p = Path(path)
+    if not p.exists() or not p.is_dir():
+        raise Exception(f'{path} is not a valid directory!')
+
 
 
 def parse_arguments():
@@ -21,8 +21,8 @@ def parse_arguments():
     backup_type = sys.argv[3]
     backup_name = sys.argv[4]
 
-    ensure_mounted( src )
-    ensure_mounted( dest )
+    ensure_directory( src )
+    ensure_directory( dest )
 
     if( not is_format_correct( backup_type )) :
         raise Exception( 'Format is not valid!' )
@@ -31,9 +31,8 @@ def parse_arguments():
 
 
 def add_date_format(dest, backup_name):
-    dest_format = dest + '/' + backup_name
-    dest_format += datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    return dest_format
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return os.path.join(dest, f"{backup_name}-{ts}")
 
     
 def make_zip_folder():
