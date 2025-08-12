@@ -36,7 +36,7 @@ You can store multiple backup copies in the cloud using: **rclone**
 [Rclone Manual](https://rclone.org/commands)
 - Using Host:
   ```bash
-    rclone command source:path/to/file fileconfiguration-name:path/to/Cloudfile
+    rclone command source:path/to/file destination:path/to/Cloudfile
   ```
 - Using Docker Image:
   ```bash
@@ -44,7 +44,7 @@ You can store multiple backup copies in the cloud using: **rclone**
       --volume ~/config/rclone:/config/rclone \
       --volume ~/my_backups:/data \
       rclone/rclone \
-      copy pCloud: /data/
+      rclone command source:path dest:path
   ```
 
 
