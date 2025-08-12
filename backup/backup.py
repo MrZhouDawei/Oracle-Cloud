@@ -8,11 +8,11 @@ def is_format_correct(format: str):
     format_list = ['zip','tar','gztar', 'bztar', 'xztar']
     return format in format_list
 
+
 def ensure_directory(path: str):
     p = Path(path)
     if not p.exists() or not p.is_dir():
         raise Exception(f'{path} is not a valid directory!')
-
 
 
 def parse_arguments():
@@ -24,7 +24,7 @@ def parse_arguments():
     ensure_directory( src )
     ensure_directory( dest )
 
-    if( not is_format_correct( backup_type )) :
+    if( not is_format_correct( backup_type ) ) :
         raise Exception( 'Format is not valid!' )
 
     return src, dest, backup_type, backup_name
@@ -37,7 +37,7 @@ def add_date_format(dest, backup_name):
     
 def make_zip_folder():
     src, dest, backup_type, backup_name = parse_arguments()
-    format_dest = add_date_format( dest, backup_name)
+    format_dest = add_date_format( dest, backup_name )
 
     shutil.make_archive( 
         base_name=format_dest,
