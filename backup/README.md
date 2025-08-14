@@ -28,7 +28,7 @@ The container will still see `/data` and `/destination` as mountpoints and your 
 
 ### If `/data` is empty or not mounted
 
-Even if `/data` , if the source directory is empty  or not mounted the backup will still run but produce an empty archive.  
+ If the source directory is empty  or not mounted the backup will still run but produce an empty archive.  
 
 ## More Info
 
