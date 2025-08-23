@@ -116,7 +116,7 @@ docker compose down  && docker-compose up -d
 
 ### License
 
-This project is under [License](../Host/LICENSE).
+This project is under [License](../LICENSE).
 
 ### Contacts
 

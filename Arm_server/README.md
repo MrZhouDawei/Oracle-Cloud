@@ -4,16 +4,21 @@ This guide will walk you through setting up a Minecraft server (vanilla or modde
 
 ## Table of Contents
 
-1. [Set Up Oracle Cloud Instance](#set-up-oracle-cloud-instance)
-2. [Generate and Configure SSH Access](#generate-and-use-ssh-keys-on-unix)
-3. [Create Local Scripts](#create-connection-and-upload-scripts-on-your-local-machine)
-4. [Connect and Install Dependencies](#connect-and-install-docker)
-5. [Set Up Minecraft Directories](#set-up-minecraft-directories)
-6. [Upload Existing World (Optional)](#upload-existing-world-optional)
-7. [Start the Server](#start-the-minecraft-server)
-8. [Add Additional Server](#add-additional-servers)
-9. [License](#license)
-10. [Contacts](#contacts)
+- [Minecraft Server Setup on Oracle Instance (Unix-based OS)](#minecraft-server-setup-on-oracle-instance-unix-based-os)
+  - [Table of Contents](#table-of-contents)
+  - [Set Up Oracle Cloud Instance](#set-up-oracle-cloud-instance)
+  - [Generate and Use SSH Keys on Unix](#generate-and-use-ssh-keys-on-unix)
+  - [Create Connection and Upload Scripts (on your local machine)](#create-connection-and-upload-scripts-on-your-local-machine)
+  - [Connect and Install Docker \*\*](#connect-and-install-docker-)
+    - [Install Docker](#install-docker)
+    - [Install Docker Compose Plugin](#install-docker-compose-plugin)
+  - [Set Up Minecraft Directories](#set-up-minecraft-directories)
+  - [Upload Existing World (Optional)](#upload-existing-world-optional)
+  - [Start the Minecraft Server](#start-the-minecraft-server)
+  - [Add Additional Servers](#add-additional-servers)
+  - [To Do](#to-do)
+  - [License](#license)
+  - [Contacts](#contacts)
 
 ## Set Up Oracle Cloud Instance 
 
@@ -135,7 +140,7 @@ To run another server:
 
 ## License ##
 
-This project is distributed under the [Apache License](LICENSE)
+This project is distributed under the [../Apache License](../LICENSE)
 
 ## Contacts ##
 
