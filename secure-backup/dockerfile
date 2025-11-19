@@ -1,0 +1,48 @@
+ARG ALPINE_VERSION="3.22"
+
+FROM alpine:${ALPINE_VERSION} AS builder
+# init / backup / prune / serve / list / extract / custom / version / check / clean_log / rconfig / sync 
+ENV MODE=""  
+#identifier to allow automatic stale lock removal
+ENV BORG_REPO="/home/docker/repo"
+ENV BORG_ID="dockerID"
+ENV BORG_PASSPHRASE=""
+ENV BORG_SSH_FILE=""
+ENV BORG_COMMON_OPTION=""
+ENV BORG_OPTION=""
+ENV BORG_ARCHIVE=""
+
+ENV RCLONE_REMOTE=""
+ENV RCLONE_ARGS=""
+
+ENV CUSTOM_CMD=""
+ENV DRY_RUN="false"
+ENV TZ="UTC"
+ENV FILE_LOG=""
+
+#log mode(info,debug)
+
+
+#specify the exact repo to apk(v3.22-community)
+RUN apk add --no-cache --upgrade rclone borgbackup --repository=https://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main && \
+    addgroup -g 1000 docker && \
+    adduser -D -u 1000 -G docker -h /home/docker docker && \
+    mkdir -p /home/docker/scripts /home/docker/data /home/docker/repo /home/docker/rclone && \
+        /home/docker/.ssh /home/docker/logs /home/docker/passphrase && \
+    chown -R docker:docker /home/docker/scripts /home/docker/data /home/docker/repo /home/docker/rclone &&\
+        /home/docker/.ssh /home/docker/logs /home/docker/passphrase &&\
+    chmod 700 /home/docker/.ssh &&\
+    chmod 600 /home/docker/.ssh/* /home/docker/passphrase/*
+
+COPY entrypoint.sh /home/docker/scripts/entrypoint.sh
+RUN chmod +x /home/docker/scripts/entrypoint.sh && chown docker:docker /home/docker/scripts/entrypoint.sh
+
+USER docker
+WORKDIR /home/docker
+
+ENTRYPOINT ["/home/docker/scripts/entrypoint.sh" ]
+CMD [""]
+
+
+
+
